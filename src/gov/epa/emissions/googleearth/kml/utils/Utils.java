@@ -118,8 +118,7 @@ public class Utils {
 			format = POINT_ZEROZEROONE_TO_ZEROONE_DECIMAL_FORMAT;
 		} else if (value >= 0.01 && value < 0.1){
 			format = POINT_ZEROONE_TO_POINT_ONE_DECIMAL_FORMAT;
-		}
-		else if (value >= .1 && value < 1) {
+		} else if (value >= 0.1 && value < 1) {
 			format = POINT_ONE_TO_ONE_DECIMAL_FORMAT;
 		} else if (value >= 1 && value < 10) {
 			format = ONE_TO_TEN_DECIMAL_FORMAT;
@@ -133,13 +132,13 @@ public class Utils {
 	public static String format(double d, DecimalFormat decimalFormat) {
 
 		String retVal = "";
-		if (d == (int) d || d >= 10) {
-			retVal = Long.toString((int) d);
-		} else if (d >= 10) {
-			retVal = Long.toString(Math.round(d));
-		} else {
+		//if (d == (int) d || d >= 10) {
+		//	retVal = Long.toString((int) d);
+		//} else if (d >= 10) {
+		//	retVal = Long.toString(Math.round(d));
+		//} else {
 			retVal = decimalFormat.format(d);
-		}
+		//}
 
 		return retVal;
 	}
