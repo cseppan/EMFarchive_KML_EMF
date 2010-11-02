@@ -168,8 +168,8 @@ public class RecordImpl implements Record {
 		String stringValue = this.values[index];
 
 		if (stringValue == null || stringValue.length() == 0) {
-			System.out
-					.println("Skipping format of value '" + stringValue + "'");
+			//System.out
+			//		.println("Skipping format of value '" + stringValue + "'");
 		} else {
 
 			if (isReal[index] && !isInt[index]) {
