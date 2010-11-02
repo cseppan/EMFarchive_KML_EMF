@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Utils {
 
+	public static final int NUM_DIGITS = 4;
+	public static final double BIG_VALUE = 1000000.0;
+	public static final double SMALL_VALUE = 0.0001;
 	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(
 			"0.0E0");
 	public static final DecimalFormat ONE_TO_TEN_DECIMAL_FORMAT = new DecimalFormat(
@@ -132,6 +135,7 @@ public class Utils {
 	public static String format(double d, DecimalFormat decimalFormat) {
 
 		String retVal = "";
+		
 		//if (d == (int) d || d >= 10) {
 		//	retVal = Long.toString((int) d);
 		//} else if (d >= 10) {
@@ -142,6 +146,107 @@ public class Utils {
 
 		return retVal;
 	}
+	
+	public static String format(double d, double range) {
+
+		String retVal = "";
+		
+		DecimalFormat format = null;
+		
+		double r = range;
+		if ( r<0){
+			r  = 0-r;
+		}
+		int n = 0;
+		while ( r<1 && n<NUM_DIGITS)
+		{
+			r *= 10;
+			n++;
+		}
+		switch (n) {
+			case 1:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.0");
+				} else {
+					format = new DecimalFormat("0.0E0");
+				}
+				break;
+			case 2:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.00");
+				} else {
+					format = new DecimalFormat("0.00E0");
+				}	
+				break;
+			case 3:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.000");
+				} else {
+					format = new DecimalFormat("0.000E0");
+				}
+				break;
+			case 4:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.0000");
+				} else {
+					format = new DecimalFormat("0.0000E0");
+				}
+				break;
+			case 5:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.00000");
+				} else {
+					format = new DecimalFormat("0.00000E0");
+				}
+				break;
+			case 6:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.000000");
+				} else {
+					format = new DecimalFormat("0.000000E0");
+				}
+				break;
+			case 7:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.0000000");
+				} else {
+					format = new DecimalFormat("0.0000000E0");
+				}
+				break;
+			case 8:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.00000000");
+				} else {
+					format = new DecimalFormat("0.00000000E0");
+				}
+				break;
+			case 9:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.000000000");
+				} else {
+					format = new DecimalFormat("0.000000000E0");
+				}
+				break;
+			case 10: 
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0.0000000000");
+				} else {
+					format = new DecimalFormat("0.0000000000E0");
+				}
+				break;
+			default:
+				if ( (d<BIG_VALUE && d>SMALL_VALUE) || (d<0-SMALL_VALUE && d>0-BIG_VALUE)) {
+					format = new DecimalFormat("######0");
+				} else {
+					format = new DecimalFormat("0E0");
+				}
+				break;
+		}
+			
+		retVal = format.format(d);
+
+		return retVal;
+	}	
 
 	public static String wrapLine(String line, int length) {
 
