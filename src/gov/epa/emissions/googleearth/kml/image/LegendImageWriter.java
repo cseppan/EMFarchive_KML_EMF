@@ -34,8 +34,8 @@ public class LegendImageWriter {
 
 		Collections.reverse(colors);
 
-		this.bufferedImage = new BufferedImage(2 * size + 145, 3 * size
-				* colors.size() / 2, BufferedImage.TYPE_INT_ARGB);
+		this.bufferedImage = new BufferedImage(2 * size + 187, //145, 
+				3 * size * colors.size() / 2, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D g = (Graphics2D) this.bufferedImage.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -60,7 +60,7 @@ public class LegendImageWriter {
 
 		int tab1 = 3 * size / 2;
 		int tab2 = tab1 + 8;
-		int tab3 = tab2 + 59;
+		int tab3 = tab2 + 87;//59;
 		int tab4 = tab3 + 14;
 
 		g.setColor(Color.BLACK);
@@ -72,8 +72,8 @@ public class LegendImageWriter {
 			
 			double minRange = binRangeManager.getMinRange();
 			
-			String minStr = Utils.format(range.getMin(), Utils.getFormat(minRange));
-			String maxStr = Utils.format(range.getMax(), Utils.getFormat(minRange));
+			String minStr = Utils.format(range.getMin(), minRange);//Utils.format(range.getMin(), Utils.getFormat(minRange));
+			String maxStr = Utils.format(range.getMax(), minRange);//Utils.format(range.getMax(), Utils.getFormat(minRange));
 			//String minStr = Utils.format(range.getMin(), Utils.getFormat(range
 			//		.getMin()));
 			//String maxStr = Utils.format(range.getMax(), Utils.getFormat(range

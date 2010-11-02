@@ -317,8 +317,8 @@ public class DocumentWriterImpl implements DocumentWriter {
 		
 		//String minStr = Utils.format(min, Utils.getFormat(min));
 		//String maxStr = Utils.format(max, Utils.getFormat(max));
-		String minStr = Utils.format(min, Utils.getFormat(minRange));
-		String maxStr = Utils.format(max, Utils.getFormat(minRange));		
+		String minStr = Utils.format(min, minRange); //Utils.format(min, Utils.getFormat(minRange));
+		String maxStr = Utils.format(max, minRange);//Utils.format(max, Utils.getFormat(minRange));		
 		
 
 		sb.append(KMLUtils.openFolderElement(this.indent));

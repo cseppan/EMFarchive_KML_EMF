@@ -59,9 +59,9 @@ public class LegendStatsWriter {
 
 		g.setColor(Color.BLACK);
 		
-		String minStr = Utils.format(min, Utils.getFormat(min));
-		String maxStr = Utils.format(max, Utils.getFormat(max));
-		String meanStr = Utils.format(mean, Utils.getFormat(mean));
+		String minStr = Utils.format(min, min);//Utils.format(min, Utils.getFormat(min));
+		String maxStr = Utils.format(max, max);//Utils.format(max, Utils.getFormat(max));
+		String meanStr = Utils.format(mean, mean);//Utils.format(mean, Utils.getFormat(mean));
 		// TODO: do not use range for now
 		//double net = max-min;
 		//if ( net<0) net = 0-net;
