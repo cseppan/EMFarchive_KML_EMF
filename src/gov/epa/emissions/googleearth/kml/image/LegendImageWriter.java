@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.awt.Graphics;
+import java.awt.FontMetrics;
 
 import javax.imageio.ImageIO;
 
@@ -32,10 +34,40 @@ public class LegendImageWriter {
 
 	public void drawImage(List<Color> colors, BinRangeManager binRangeManager) {
 
-		Collections.reverse(colors);
-
-		this.bufferedImage = new BufferedImage(2 * size + 187, //145, 
+		int binCount = binRangeManager.getRangeCount();
+		String [] legendMin = new String[binCount];
+		String [] legendMax = new String[binCount];
+		double minRange = binRangeManager.getMinRange();
+		int legendMinLen = 0;
+		int legendMaxLen = 0;
+		BufferedImage tmpImg = new BufferedImage(2 * size + 300, //145, 
 				3 * size * colors.size() / 2, BufferedImage.TYPE_INT_ARGB);
+		FontMetrics metrics = ((Graphics2D) tmpImg.getGraphics()).getFontMetrics();
+		for (int j = binRangeManager.getRangeCount() - 1; j >= 0; j--) {
+
+			Range range = binRangeManager.getRange(j);
+
+			//String minStr 
+			legendMin[j] = Utils.format(range.getMin(), minRange);//Utils.format(range.getMin(), Utils.getFormat(minRange));
+			int len = metrics.stringWidth( legendMin[j]);
+			if (legendMinLen < len) {
+				legendMinLen = len;
+			}
+			
+			//String maxStr 
+			legendMax[j] = Utils.format(range.getMax(), minRange);//Utils.format(range.getMax(), Utils.getFormat(minRange));
+			len = metrics.stringWidth( legendMax[j]);
+			if (legendMaxLen < len) {
+				legendMaxLen = len;
+			}
+		}
+		
+		int w = 3 * size / 2 + 8 + legendMinLen + 8 + 14 + legendMaxLen + 8;
+		int h = 3 * size * colors.size() / 2;
+		Collections.reverse(colors);
+//		this.bufferedImage = new BufferedImage(2 * size + 187, //145, 
+//				3 * size * colors.size() / 2, BufferedImage.TYPE_INT_ARGB);
+		this.bufferedImage = new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
 
 		Graphics2D g = (Graphics2D) this.bufferedImage.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -60,7 +92,7 @@ public class LegendImageWriter {
 
 		int tab1 = 3 * size / 2;
 		int tab2 = tab1 + 8;
-		int tab3 = tab2 + 87;//59;
+		int tab3 = tab2 + legendMinLen + 8;//59;
 		int tab4 = tab3 + 14;
 
 		g.setColor(Color.BLACK);
@@ -68,16 +100,14 @@ public class LegendImageWriter {
 		int k = 0;
 		for (int j = binRangeManager.getRangeCount() - 1; j >= 0; j--) {
 
-			Range range = binRangeManager.getRange(j);
-			
-			double minRange = binRangeManager.getMinRange();
-			
-			String minStr = Utils.format(range.getMin(), minRange);//Utils.format(range.getMin(), Utils.getFormat(minRange));
-			String maxStr = Utils.format(range.getMax(), minRange);//Utils.format(range.getMax(), Utils.getFormat(minRange));
-			//String minStr = Utils.format(range.getMin(), Utils.getFormat(range
+     		//String minStr = Utils.format(range.getMin(), Utils.getFormat(range
 			//		.getMin()));
 			//String maxStr = Utils.format(range.getMax(), Utils.getFormat(range
-			//		.getMax()));			
+			//		.getMax()));
+			
+			String minStr = legendMin[j];
+			String maxStr = legendMax[j];
+			Range range = binRangeManager.getRange(j);
 
 			if (range.getMin() < 0) {
 

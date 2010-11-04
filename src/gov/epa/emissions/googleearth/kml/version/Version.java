@@ -10,7 +10,7 @@ import java.util.Date;
  **************************************************************/  
 public class Version {
 
-    private Date buildDate = new Date(1287673412955L);
+    private Date buildDate = new Date(1288798714581L);
 
     public String getVersion() {
         return this.buildDate.toString();
