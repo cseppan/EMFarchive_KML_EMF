@@ -108,9 +108,16 @@ public class CSVRecordReader implements RecordProducer {
 						System.err
 								.println("Throwing out line based on column count: "
 										+ line);
+						throw new KMZGeneratorException(
+								KMZGeneratorException.ERROR_CODE_PROCESSING_DATA_FILE,
+								"Error while reading data file record: " + line);
 					}
+					
+					throw new KMZGeneratorException(
+							KMZGeneratorException.ERROR_CODE_PROCESSING_DATA_FILE,
+							"Error while reading data file record: " + line);
 
-					retVal = this.nextRecord();
+					//retVal = this.nextRecord();
 				}
 			}
 

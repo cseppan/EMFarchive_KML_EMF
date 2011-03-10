@@ -288,6 +288,13 @@ public class Utils {
 
 	public static String[] parseLine(String line, String delimiter) {
 
+		if (line.startsWith(delimiter)) {
+			line = " "+line;
+		}
+		if (line.endsWith(delimiter)) {
+			line += " ";
+		}
+		
 		String[] temp = line.split(delimiter);
 
 		List<String> tokens = new ArrayList<String>();
@@ -298,7 +305,7 @@ public class Utils {
 				StringBuilder sb = new StringBuilder();
 				for (; i < temp.length; i++) {
 
-					sb.append(temp[i]);
+					sb.append(temp[i].trim());
 
 					if (temp[i].endsWith("\"")) {
 
@@ -309,7 +316,7 @@ public class Utils {
 					sb.append(delimiter);
 				}
 			} else {
-				tokens.add(temp[i]);
+				tokens.add(temp[i].trim());
 			}
 		}
 

@@ -85,7 +85,7 @@ public class RecordImpl implements Record {
 
 			String value = values[i];
 			if (value == null || value.length() == 0) {
-				System.out.println("Skipping check of value '" + value + "'");
+				//System.out.println("Skipping check of value '" + value + "'");
 			} else {
 
 				if (isInt[i]) {
