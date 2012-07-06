@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PreProcessorImpl implements PreProcessor {
+public class MultiGeometryPreProcessorImpl implements PreProcessor {
 
 	private List<Record> records;
 	private ArrayList<Double> values;
@@ -43,7 +43,7 @@ public class PreProcessorImpl implements PreProcessor {
 	private int totalCount;
 	private int processsedCount;
 
-	public PreProcessorImpl() {
+	public MultiGeometryPreProcessorImpl() {
 		this.records = new ArrayList<Record>();
 	}
 

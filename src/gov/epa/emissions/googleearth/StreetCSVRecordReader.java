@@ -4,6 +4,10 @@ import gov.epa.emissions.googleearth.kml.ConfigurationManager;
 import gov.epa.emissions.googleearth.kml.KMZGeneratorException;
 import gov.epa.emissions.googleearth.kml.record.RecordImpl;
 import gov.epa.emissions.googleearth.kml.record.Record;
+import gov.epa.emissions.googleearth.kml.record.StreetRecord;
+import gov.epa.emissions.googleearth.kml.record.StreetRecordHeader;
+import gov.epa.emissions.googleearth.kml.record.StreetRecordHeaderImpl;
+import gov.epa.emissions.googleearth.kml.record.StreetRecordImpl;
 import gov.epa.emissions.googleearth.kml.utils.Utils;
 
 import java.io.BufferedReader;
@@ -12,15 +16,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CSVRecordReader implements RecordProducer {
-
+public class StreetCSVRecordReader implements StreetRecordProducer {
+	
 	private File inFile;
 	private BufferedReader reader;
 	private boolean headerRead = false;
 	private int columnCount;
 	private String[] columnHeader;
+	private StreetRecordHeader colHeader;
 
-	public CSVRecordReader(File inFile) throws FileNotFoundException,
+	public StreetCSVRecordReader(File inFile) throws FileNotFoundException,
 			KMZGeneratorException {
 
 		this.inFile = inFile;
@@ -33,7 +38,7 @@ public class CSVRecordReader implements RecordProducer {
 		this.headerRead = false;
 		this.reader = new BufferedReader(new FileReader(this.inFile));
 		this.columnHeader = this.readColumnHeader();
-		RecordImpl.setKeys(this.columnHeader);
+		this.colHeader = new StreetRecordHeaderImpl(this.columnHeader);
 	}
 
 	private String[] readColumnHeader() throws KMZGeneratorException {
@@ -84,9 +89,9 @@ public class CSVRecordReader implements RecordProducer {
 	}
 
 	@Override
-	public Record nextRecord() throws KMZGeneratorException {
+	public StreetRecord nextRecord() throws KMZGeneratorException {
 
-		Record retVal = null;
+		StreetRecord retVal = null;
 		try {
 			String line = this.getNextLine();
 			if (line != null && line.trim().length() > 0) {
@@ -98,7 +103,7 @@ public class CSVRecordReader implements RecordProducer {
 				line = line.replaceAll("@", "&#64;");
 				line = line.replaceAll("`", "&#90;");
 
-				retVal = new RecordImpl(Utils.parseLine(line, ","));
+				retVal = new StreetRecordImpl(this.colHeader,Utils.parseLine(line, ","));
 
 				if (retVal.getColumnCount() != this.columnCount) {
 
@@ -116,8 +121,6 @@ public class CSVRecordReader implements RecordProducer {
 					throw new KMZGeneratorException(
 							KMZGeneratorException.ERROR_CODE_PROCESSING_DATA_FILE,
 							"Error while reading data file record: " + line);
-
-					//retVal = this.nextRecord();
 				}
 			}
 
@@ -149,38 +152,36 @@ public class CSVRecordReader implements RecordProducer {
 	
 	private static void testStreetRecordReading() throws FileNotFoundException,
 	KMZGeneratorException {
-		CSVRecordReader recordReader = new CSVRecordReader(new File(
+		StreetCSVRecordReader recordReader = new StreetCSVRecordReader(new File(
 				"C:\\Users\\Jizhen\\Documents\\Projects\\Street\\KmzGenerator\\sample_multipolygon\\sample_multipolygon.csv"));
 
 		long t1 = System.currentTimeMillis();
-		Record record = null;
-		while ((record = recordReader.nextRecord()) != null) {
+		StreetRecord record = null;
+		int recordNumGood = 0;
+		int recordNumBad = 0;
+		try {
+		 record = recordReader.nextRecord();
+		 recordNumGood++;
+		} catch (Exception e) {
+			recordNumBad++;
+		}
+		while (record != null) {
+			try {
+				 record = recordReader.nextRecord();
+				 recordNumGood++;
+				} catch (Exception e) {
+					recordNumBad++;
+				}
 			System.out.println(record.toString());
 		}
 		long t2 = System.currentTimeMillis();
 
 		System.out.println("Time: " + (t2 - t1) + "millis");
-	}
-	
-	private static void testEmfQARecordReading() throws FileNotFoundException,
-	KMZGeneratorException {
-		CSVRecordReader recordReader = new CSVRecordReader(new File(
-				"D:\\cep\\GoogleEarth\\src\\data\\plant_summary.csv"));
-
-		long t1 = System.currentTimeMillis();
-		Record record = null;
-		while ((record = recordReader.nextRecord()) != null) {
-			System.out.println(record.toString());
-		}
-		long t2 = System.currentTimeMillis();
-
-		System.out.println("Time: " + (t2 - t1) + "millis");
+		System.out.println("Good records: " + recordNumGood + ", bad records: " + recordNumBad);
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException,
 			KMZGeneratorException {
 		testStreetRecordReading();
 	}
-
-
 }

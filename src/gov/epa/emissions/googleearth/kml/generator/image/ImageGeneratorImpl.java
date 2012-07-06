@@ -2,6 +2,7 @@ package gov.epa.emissions.googleearth.kml.generator.image;
 
 import gov.epa.emissions.googleearth.kml.PropertiesManager;
 import gov.epa.emissions.googleearth.kml.PropertiesManager.PropertyKey;
+import gov.epa.emissions.googleearth.kml.generator.BinnedMultiGeometrySourceGenerator;
 import gov.epa.emissions.googleearth.kml.generator.BinnedPointSourceGenerator;
 import gov.epa.emissions.googleearth.kml.generator.preprocessor.PreProcessor;
 import gov.epa.emissions.googleearth.kml.image.ImageWriter;
@@ -101,5 +102,11 @@ public class ImageGeneratorImpl implements ImageGenerator {
 
 	public File getStatsLegend() {
 		return statsLegend;
+	}
+
+	@Override
+	public void generateImages(BinnedMultiGeometrySourceGenerator generator) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -21,7 +21,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentWriterImpl implements DocumentWriter {
+public class MultiGeometryDocumentWriterImpl implements DocumentWriter {
 
 	private StringBuilder indent;
 
