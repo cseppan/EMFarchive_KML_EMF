@@ -27,19 +27,20 @@ public class EqualCountBinStrategy implements BinStrategy {
 
 			@Override
 			public int compare(Double d1, Double d2) {
+				return d1.compareTo(d2);
 
-				int retVal = 0;
-
-				if (d2 != d1) {
-
-					if (d2 > d1) {
-						retVal = -1;
-					} else {
-						retVal = 1;
-					}
-				}
-
-				return retVal;
+//				int retVal = 0;
+//
+//				if (d2 != d1) {
+//
+//					if (d1 < d2) {
+//						retVal = -1;
+//					} else {
+//						retVal = 1;
+//					}
+//				}
+//
+//				return retVal;
 			}
 
 		});
